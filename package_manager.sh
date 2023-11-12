@@ -4,10 +4,12 @@ packages=()
 services=()
 
 # Define OS
+# Some dumb changes for the sake of the changes in feature-2
 linux_type=$(head /etc/os-release \
 | grep '^NAME=' \
 | sed '1q' \
 | tr -d 'NAME="' \
+#Trimming redundant ' ' from the OS name
 | cut -d ' ' -f 1)
 packages_list_source=$linux_type"_packages.txt"
 services_list_source=$linux_type"_services.txt"
