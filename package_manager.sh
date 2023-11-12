@@ -4,7 +4,11 @@ packages=()
 services=()
 
 # Define OS
-linux_type=$(head /etc/os-release | grep '^NAME=' | sed '1q' | tr -d 'NAME="' | cut -d ' ' -f 1)
+linux_type=$(head /etc/os-release \
+| grep '^NAME=' \
+| sed '1q' \
+| tr -d 'NAME="' \
+| cut -d ' ' -f 1)
 packages_list_source=$linux_type"_packages.txt"
 services_list_source=$linux_type"_services.txt"
 
