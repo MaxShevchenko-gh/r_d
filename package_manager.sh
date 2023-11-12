@@ -11,6 +11,7 @@ linux_type=$(head /etc/os-release \
 | tr -d 'NAME="' \
 #Trimming redundant ' ' from the OS name
 | cut -d ' ' -f 1)
+# Define input source
 packages_list_source=$linux_type"_packages.txt"
 services_list_source=$linux_type"_services.txt"
 
