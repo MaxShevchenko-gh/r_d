@@ -9,6 +9,7 @@ linux_type=$(head /etc/os-release \
 | sed '1q' \
 | tr -d 'NAME="' \
 | cut -d ' ' -f 1)
+# Define input source
 packages_list_source=$linux_type"_packages.txt"
 services_list_source=$linux_type"_services.txt"
 
