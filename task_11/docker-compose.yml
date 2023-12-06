@@ -1,0 +1,58 @@
+version: "3.9"
+
+services:
+  db:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: notSecureChangeMe
+      MYSQL_DATABASE: study
+    networks:
+      - local
+    volumes:
+      - ./db_setup/create_example_table.sql:/docker-entrypoint-initdb.d/create_example_table.sql
+    
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=db 
+    networks:
+      - local
+      - ext
+  
+  php_viewer:
+    image: php_viewer
+    restart: always
+    ports:
+      - 8888:80
+    depends_on:
+      - db
+    environment:
+      - PMA_HOST=db
+    networks:
+      - local
+      - ext
+
+  php_worker:
+    depends_on:
+      - db
+      - php_viewer
+    environment:
+      - PMA_HOST=db
+    image: php_worker
+    restart: always
+    networks:
+      - local
+
+networks:
+  local:
+    external: false
+
+  ext:
+      driver: bridge
