@@ -1,5 +1,5 @@
 # r_d
-/task_11 includes docker-compose.yml for 4 containers:
+docker_images folder includes docker-compose.yml for 4 containers:
 db - default MariaDB image with init sql script to setup study DB and example table
 phpmyadmin - for debug purposes and DB structure navigation
 php_viewer - app has enabled apache2 webserver and php-app that connects to DB and displays content of example table
@@ -9,8 +9,8 @@ Folders /php_viewer and /php_worker include Dockerfile and apps for building the
 Folder /db_configuration includes sql script for initial DB setup
 
 To run the setup:
-cd ./task_11
-docker build -t php_viewer./php_viewer
+cd ./docker_images
+docker build -t php_viewer ./php_viewer
 docker build -t php_worker ./php_worker
 docker-compose --build -d up
 
