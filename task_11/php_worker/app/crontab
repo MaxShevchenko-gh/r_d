@@ -1,3 +1,0 @@
-#!/bin/sh
-* * * * * root bash /app/rnd.sh
-#Line for correct work of cron-record
