@@ -7,6 +7,7 @@ docker_images folder includes docker-compose.yml for 4 containers:
 - php_worker: php-based app that inserts new value based on pervious to the example table once a minute at a random second
 
 Folders /php_viewer and /php_worker include Dockerfile and apps for building the containters php_viewer and php_worker respectively
+
 Folder /db_configuration includes sql script for initial DB setup
 
 ## To run the setup:
