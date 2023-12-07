@@ -1,0 +1,52 @@
+version: "3.9"
+services:
+  db:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: notSecureChangeMe
+      MYSQL_DATABASE: study
+    volumes:
+      - ./db_setup/create_example_table.sql:/docker-entrypoint-initdb.d/create_example_table.sql
+    deploy:
+      placement:
+        constraints:
+          - 'node.role==manager'
+
+  php_viewer:
+    image: shevchenkomb/r_d:php_viewer
+    restart: always
+    ports:
+      - 8888:80
+    depends_on:
+      - db
+    environment:
+      - PMA_HOST=db
+
+  php_worker:
+    depends_on:
+      - db
+      - php_viewer
+    environment:
+      - PMA_HOST=db
+    image: shevchenkomb/r_d:php_worker
+    restart: always
+    deploy:
+      replicas: 10
+      placement:
+        constraints:
+          - 'node.role==worker'
+
+  visualizersvc:
+    image: dockersamples/visualizer:latest
+    depends_on:
+      - db
+      - php_viewer
+    deploy:
+      placement:
+        constraints:
+          - 'node.role==manager'
+    ports:
+      - '5000:8080'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
